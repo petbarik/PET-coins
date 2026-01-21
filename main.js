@@ -70,9 +70,8 @@ class PETCoins {
       await this.firebaseRequest("GET", "/cards")
     ) ?? {};
 
+    if (verPIN == storedPin && from != to && to in cards && (await this.getCoins({ CARD: from })) >= amount) {
 
-    if (verPIN == storedPin && from != to && to in cards) {
-      this.TransactionSucces = true;
     }
   }
 
