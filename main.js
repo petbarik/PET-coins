@@ -72,8 +72,13 @@ class PETCoins {
   /* ===== REPORTER BLOCK ===== */
  async getCoins(args) {
   const card = String(args.CARD);
+    let coins = await this.firebaseRequest("GET", "/cards/" + card + "/coins");
+    
+    if (value === null || value === undefined) {
+      value = 0;
+    };
 
-    return await this.firebaseRequest("GET", "/cards/" + card + "/coins") ?? 0;
+    return value;
   }
 
   async firebaseRequest(method, path, body = null) {
