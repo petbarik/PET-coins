@@ -62,25 +62,25 @@ class PETCoins {
   }
 
   /* ===== REPORTER BLOCK ===== */
-  async getCoins(args) {
-    const card = String(args.CARD);
-    
-    const fetchData = async () => {
-      try {
-        const response = await fetch(this.baseUrl + "/cards/" + card + "/coins.json", {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        const data = await response.json();
-        return JSON.stringify(data);
-        } catch (e) {
-          return JSON.stringify({ error: e.message });
+ async getCoins(args) {
+  const card = String(args.CARD);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(this.baseUrl + "/cards/" + card + "/coins.json", {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
         }
-      };
- 
-    return await fetchData;
+      });
+      const data = await response.json();
+      return JSON.stringify(data);
+    } catch (e) {
+      return JSON.stringify({ error: e.message });
+    }
+  };
+
+    return await fetchData();
   }
 }
 
