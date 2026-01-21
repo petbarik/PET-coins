@@ -70,16 +70,17 @@ class PETCoins {
   }
 
   /* ===== REPORTER BLOCK ===== */
- async getCoins(args) {
-  const card = String(args.CARD);
-    let coins = await this.firebaseRequest("GET", "/cards/" + card + "/coins");
-    
-    if (coins === null || coins === undefined) {
-      coins = 0;
-    };
+  async getCoins(args) {
+    const card = String(args.CARD);
+    const raw = await this.firebaseRequest("GET", "/cards/" + card + "/coins");
 
-    return coins;
+    if (raw === null || raw === undefined || raw === "null") {
+      return 0;
+    }
+
+    return JSON.parse(raw);
   }
+
 
   async firebaseRequest(method, path, body = null) {
     const options = {
