@@ -74,11 +74,11 @@ class PETCoins {
   const card = String(args.CARD);
     let coins = await this.firebaseRequest("GET", "/cards/" + card + "/coins");
     
-    if (value === null || value === undefined) {
-      value = 0;
+    if (coins === null || coins === undefined) {
+      coins = 0;
     };
 
-    return value;
+    return coins;
   }
 
   async firebaseRequest(method, path, body = null) {
