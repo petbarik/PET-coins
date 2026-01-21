@@ -14,6 +14,7 @@ class PETCoins {
         {
           opcode: 'makeTransaction',
           blockType: Scratch.BlockType.COMMAND,
+          isAsync: true,
           text:
             'transaction from card [FROM] PIN [PIN] to card [TO] amount [AMOUNT]',
           arguments: {
@@ -40,6 +41,7 @@ class PETCoins {
         {
           opcode: 'getCoins',
           blockType: Scratch.BlockType.REPORTER,
+          isAsync: true,
           text: 'coins of card [CARD]',
           arguments: {
             CARD: { type: Scratch.ArgumentType.NUMBER }
@@ -49,13 +51,10 @@ class PETCoins {
     };
   }
 
-  /* ===== Fee calculation (matches your calculate fees block) ===== */
   calculateFees(amount) {
-    // Same result as 25 → 1.5625
     return (amount - (amount - (amount / 16)));
   }
 
-  /* ===== COMMAND BLOCK ===== */
   async makeTransaction(args) {
     const from = String(args.FROM);
     const verPIN = String(args.PIN);
@@ -71,11 +70,10 @@ class PETCoins {
     ) ?? {};
 
     if (verPIN == storedPin && from != to && to in cards && (await this.getCoins({ CARD: from })) >= amount) {
-
+      
     }
   }
 
-  /* ===== BOOLEAN BLOCK ===== */
   async transactionMade() {
     return (this.TransactionSucces);
   }
@@ -84,7 +82,6 @@ class PETCoins {
     this.TransactionSucces = false;
   }
 
-  /* ===== REPORTER BLOCK ===== */
   async getCoins(args) {
     const card = String(args.CARD);
     const raw = await this.firebaseRequest("GET", "/cards/" + card + "/coins");
@@ -95,7 +92,6 @@ class PETCoins {
 
     return JSON.parse(raw);
   }
-
 
   async firebaseRequest(method, path, body = null) {
     const options = {
