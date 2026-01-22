@@ -91,7 +91,7 @@ class PETCoins {
 
       const netTxRaw = JSON.parse(await this.firebaseRequest("GET", "/cards/" + this.networkOwner + "/transactions")) ?? {};
       const netTx = Object.values(netTxRaw);
-      netTx.push({ amount: String(fee), card: this.networkOwner, date: now, fees: "0", type: "network-fee" });
+      netTx.push({ amount: String(fee), card: from, date: now, fees: "0", type: "network-fee" });
       await this.firebaseRequest("PUT", "/cards/" + this.networkOwner + "/transactions", netTx);
       
       const netCoins = (await this.getCoins({ CARD: this.networkOwner })) + fee;
