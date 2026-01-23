@@ -74,11 +74,14 @@
         await this.firebaseRequest("GET", "/cards")
       ) ?? {};
 
+      const result = confirm("Do you want to send " + String(amount) + " to " + to + " ?");
+
       if (
         verPIN == storedPin &&
         from != to &&
         to in cards &&
-        (await this.getCoins({ CARD: from })) >= amount
+        (await this.getCoins({ CARD: from })) >= amount &&
+        result
       ) {
         const fee = this.calculateFees(amount);
         const now = Date.now().toString();
