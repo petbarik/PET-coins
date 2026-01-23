@@ -57,7 +57,7 @@
     }
 
     calculateFees(amount) {
-      return (amount - (amount - (amount / 16)));
+      return amount * 0.0625;
     }
 
     async makeTransaction(args) {
